@@ -1,1 +1,10 @@
-This project provides automated scripts to build OpenWRT for Qemu on x86 platform.
+Simple Automated Scripts to build OpenWRT for Qemu on a x86 platform.
+
+	1. /scripts/fetch.sh
+		-Fetches all required repositories from http://www.openwrt.org/openwrt/
+	2. /scripts/build.sh
+		-Builds OpenWRT for Qemu on a x86 platform
+	3. /scripts/launch.sh
+		-Launches OpenWRT on Qemu
+
+

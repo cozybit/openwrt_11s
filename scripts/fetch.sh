@@ -1,6 +1,14 @@
 #! /bin/sh
 
-mkdir ~/openwrt_build
-cd ~/openwrt_build
+set -x
+mkdir openwrt_build
+cd openwrt_build
 svn co svn://svn.openwrt.org/openwrt
-cd ~/openwrt_build/openwrt/trunk
+cp ../config_files/.config trunk/
+mkdir trunk/files
+mkdir trunk/files/etc
+mkdir trunk/files/etc/config
+cp ../config_files/wireless trunk/files/etc/config
+echo Wireless configuration copied!
+sudo cp ../config_files/qemu-ifup /etc/qemu-ifup
+echo Qemu Script Copied!

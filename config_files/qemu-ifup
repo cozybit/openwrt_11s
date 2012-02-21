@@ -1,0 +1,4 @@
+#!/bin/sh
+
+/sbin/ifconfig $1 192.168.55.1 up
+

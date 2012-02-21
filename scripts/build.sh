@@ -3,5 +3,5 @@
 set -x
 cd openwrt/trunk
 make defconfig
-cp openwrt_11s/config_files/.config .
+cp ../../openwrt_11s/config_files/.config .
 make

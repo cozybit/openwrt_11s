@@ -1,20 +1,9 @@
 Build OpenWRT for Qemu on x86
 
-	1. git clone http://github.com/sagar-kakade/openwrt_11s
+	1) git clone http://github.com/sagar-kakade/openwrt_11s
 
-	2. ./scripts/fetch.sh
+	2) ./scripts/fetch.sh
 
-	4. cd to ~/openwrt_11s/openwrt/trunk
+	3) ./scripts/build.sh
 
-	5. Copy the .config file from source tree/config_files here
-
-	6. mkdir files/etc/config
-
-	7. Copy the configuration for wireless access points to a file called 'wireless' in files/etc/config
-
-	8. Copy the given configuration for qemu interface in qemu-ifup
-	
-	9. Run the 'build' script
-
-	10. Once OpenWRT is built successfully, open it using the 'launch' script
- 
+	4) ./scripts/launch.sh 

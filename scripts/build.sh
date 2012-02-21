@@ -1,5 +1,5 @@
 #! /bin/bash
 
-cd trunk/
+cd openwrt_11s/openwrt/trunk
 ./scripts/feeds update -a
 make

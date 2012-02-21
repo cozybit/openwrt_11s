@@ -1,0 +1,7 @@
+This folder contains the configuration files required to build OpenWRT.
+	1. dot.config
+		- Copy this file into ~/openwrt_build/openwrt/trunk
+		- Rename it to '.config' befor building OpenWRT
+
+	2. qemu-ifup
+		- Copy the contents of this file into /etc/qemu-ifup before building OpenWRT

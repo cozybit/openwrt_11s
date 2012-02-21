@@ -2,6 +2,7 @@
 
 set -x
 mkdir openwrt_build
+echo Wireless configuration copied!
 cd openwrt_build
 svn co svn://svn.openwrt.org/openwrt
 cp ../config_files/.config trunk/

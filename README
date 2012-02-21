@@ -8,7 +8,7 @@ Build OpenWRT for Qemu on x86
 
 	4. cd to ~/openwrt_11s/openwrt/trunk
 
-	5. Copy the .config file from source tree/scripts here
+	5. Copy the .config file from source tree/config_files here
 
 	6. mkdir files/etc/config
 

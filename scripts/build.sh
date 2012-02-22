@@ -1,7 +1,6 @@
 #! /bin/bash
 
-set -x
+[ `basename $PWD` == openwrt_11s ] || { echo This script must be executed from openwrt_11s root directory; exit -1 }
+cp config_files/dot.config openwrt/trunk/.config
 cd openwrt/trunk
-make defconfig
-cp ../../openwrt_11s/config_files/.config .
 make

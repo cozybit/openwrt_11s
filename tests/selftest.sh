@@ -3,6 +3,6 @@
 yes | ./scripts/build.sh
 yes | ./scripts/fetch.sh
 yes | ./scripts/launch.sh
-
-# TODO: ssh into the qemu instance to determine if launch was successful
-# TODO: look for mesh config stanzas in /etc/config/wireless
+sleep 5
+ping 192.168.55.2 -c 5 || { echo FAIL; exit -1; }
+echo PASS

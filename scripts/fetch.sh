@@ -36,13 +36,13 @@ function root_check
 [ `basename $PWD` == openwrt_11s ] || { echo This script must be executed from openwrt_11s root directory; exit -1; }
 
 
-svn co svn://svn.openwrt.org/openwrt
+svn co svn://svn.openwrt.org/openwrt/trunk openwrt
 
-mkdir openwrt/trunk/files
-mkdir openwrt/trunk/files/etc
-mkdir openwrt/trunk/files/etc/config
+mkdir openwrt/files
+mkdir openwrt/files/etc
+mkdir openwrt/files/etc/config
 
-cp config_files/wireless openwrt/trunk/files/etc/config/
+cp config_files/wireless openwrt/files/etc/config/
 
 root_check "This script needs permission to add a qemu-ifup file to your /etc directory"
 

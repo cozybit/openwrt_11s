@@ -6,7 +6,8 @@ function fail
 	exit -1
 }
 
-yes | ./scripts/fetch.sh
+./scripts/fetch.sh
+yes | ./scripts/configure.sh
 yes | ./scripts/build.sh
 ./scripts/launch.sh &> /dev/null &
 sleep 10

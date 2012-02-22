@@ -1,9 +1,7 @@
 Build OpenWRT for Qemu on x86
 
 	1) git clone http://github.com/cozybit/openwrt_11s
-
 	2) ./openwrt_11s/scripts/fetch.sh
-
-	3) ./openwrt_11s/scripts/build.sh
-
-	4) ./openwrt_11s/scripts/launch.sh 
+	3) ./openwrt_11s/scripts/configure.sh
+	4) ./openwrt_11s/scripts/build.sh
+	5) ./openwrt_11s/scripts/launch.sh 

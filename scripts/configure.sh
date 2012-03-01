@@ -38,6 +38,11 @@ svn co svn://svn.openwrt.org/openwrt/trunk openwrt
 
 mkdir -p openwrt/files/etc/config
 
+# remove iptables
+mv openwrt/package/iptables/Makefile{,.gone}
+# and remove this until we fix it
+mv openwrt/package/kernel/Makefile{,.gone}
+
 cp config_files/wireless openwrt/files/etc/config/
 cp config_files/network openwrt/files/etc/config/
 

@@ -49,4 +49,11 @@ root_check "This script needs permission to add a qemu-ifup file to your /etc di
 
 sudo cp config_files/qemu-ifup /etc/qemu-ifup
 
+
+# copy openwrt .config file
+cp config_files/dot.config openwrt/.config
+
+# copy kernel .config file
+cp config_files/kernel.dot.config kernel/.config
+
 #TODO: configure build for this host here (e.g. x86? x86_64?).  You can do this by parsing the .config.

@@ -36,11 +36,10 @@ function root_check
 
 svn co svn://svn.openwrt.org/openwrt/trunk openwrt
 
-mkdir openwrt/files
-mkdir openwrt/files/etc
-mkdir openwrt/files/etc/config
+mkdir -p openwrt/files/etc/config
 
 cp config_files/wireless openwrt/files/etc/config/
+cp config_files/network openwrt/files/etc/config/
 
 root_check "This script needs permission to add a qemu-ifup file to your /etc directory"
 

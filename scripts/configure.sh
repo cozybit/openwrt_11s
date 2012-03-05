@@ -34,8 +34,6 @@ function root_check
 [ `basename $PWD` == openwrt_11s ] || { echo This script must be executed from openwrt_11s root directory; exit -1; }
 
 
-svn co svn://svn.openwrt.org/openwrt/trunk openwrt
-
 mkdir -p openwrt/files/etc/config
 
 # remove iptables

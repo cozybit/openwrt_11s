@@ -55,5 +55,6 @@ cp config_files/dot.config openwrt/.config
 
 # copy kernel .config file
 cp config_files/kernel.dot.config kernel/.config
+cd openwrt && yes '' | make kernel_oldconfig && cd ..
 
 #TODO: configure build for this host here (e.g. x86? x86_64?).  You can do this by parsing the .config.

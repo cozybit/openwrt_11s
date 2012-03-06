@@ -38,6 +38,7 @@ mkdir -p openwrt/files/etc/config
 
 # remove iptables
 mv openwrt/package/iptables/Makefile{,.gone}
+
 # and remove this until we fix it
 mv openwrt/package/kernel/Makefile{,.gone}
 
@@ -52,6 +53,7 @@ sudo cp config_files/qemu-ifup /etc/qemu-ifup
 
 # copy openwrt .config file
 cp config_files/dot.config openwrt/.config
+sed -i -e "s@\@KERNEL_PATH\@@${PWD}/kernel@" openwrt/.config
 
 # copy kernel .config file
 cp config_files/kernel.dot.config kernel/.config

@@ -60,4 +60,6 @@ sed -i -e "s@CONFIG_EXTERNAL_KERNEL_TREE.*@CONFIG_EXTERNAL_KERNEL_TREE=\"${PWD}/
 cp config_files/kernel.dot.config kernel/.config
 cd openwrt && yes '' | make kernel_oldconfig && cd ..
 
-#TODO: configure build for this host here (e.g. x86? x86_64?).  You can do this by parsing the .config.
+# This is for aesthetics only:  it only affects the directory name of intermediate build files.
+sed -i -e "s/LINUX_VERSION:=.*/LINUX_VERSION:=3.2.0/" openwrt/target/linux/x86/Makefile
+

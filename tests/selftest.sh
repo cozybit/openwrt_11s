@@ -9,6 +9,7 @@ function fail
 ./scripts/fetch.sh
 yes | ./scripts/configure.sh
 yes | ./scripts/build.sh
+./scripts/build-modules.sh
 ./scripts/launch.sh &> /dev/null &
 sleep 10
 ping 192.168.55.2 -c 5 || fail

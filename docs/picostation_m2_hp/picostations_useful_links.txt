@@ -1,0 +1,8 @@
+Useful Links for PICOStation:
+
+How-to-build: 
+Flashing OpenWRT on Ubiquiti Picostation Devices: http://openwisp.caspur.it/wiki/12/FlashingUbiquitiPicostation
+PicoStation2 RS232 Connection: http://www.ubnt.com/wiki/PicoStation2_RS232_Connection
+Install openMESH on Picostation2: http://www.ubnt.com/wiki/Pico2_mesh
+Find LAN MAC on Single port devices:  http://ubnt.com/wiki/Finding_the_LAN_MAC_on_single_port_devices
+PicoStation M2 HP Datasheet: http://ubnt.com/downloads/datasheets/picostationm/picom2hp_DS.pdf

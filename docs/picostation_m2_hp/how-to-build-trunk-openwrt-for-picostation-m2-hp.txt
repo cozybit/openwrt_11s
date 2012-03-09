@@ -1,0 +1,174 @@
+HOW TO BUILD IT:
+###############
+
+ $ svn co svn://svn.openwrt.org/openwrt/trunk openwrt
+ $ cd openwrt
+ $ ./scripts/feeds update -a
+ $ ./scripts/feeds install -a
+ $ make menuconfig
+
+  Target System => (Atheros AR71xx/AR7240/AR913x/AR934x)
+  Target Profile (Ubiquiti Products)
+  Kernel Modules => Wireless Drivers => kmod-ath9k
+  
+ $ make V=99
+
+ Binaries are in bin/ar71xx/. We want the next ones:
+   - If installing OpenWRT from scratch: 
+        openwrt-ar71xx-generic-ubnt-bullet-m-squashfs-factory.bin
+
+   - If upgrading an existing one: 
+        openwrt-ar71xx-generic-ubnt-bullet-m-squashfs-sysupgrade.bin
+
+Note: There is no Target Profile for PicoStations in particular. Also, the
+image to flash is the one for BulletStations. But it works for our target.
+
+If you don't feel like building it, you can download a precompiled image from: 
+http://downloads.openwrt.org/snapshots/trunk/ar71xx/openwrt-ar71xx-generic-ubnt-bullet-m-squashfs-factory.bin 
+ 
+
+HOW TO FLASH IT:
+###############
+
+0- Disassemble it:
+  
+  - The screws are behind the label in the back side of the device.
+  - Pull from the unscrewed piece to take the PCB out.
+  - There is a 3rd screw next to the ethernet connector. Unscrew it to have
+    access to the reset button.
+ 
+1- Connect the PicoStation to a LAN with the nextwork IP: 192.168.1.X. Make
+   sure that 192.168.1.20 is free, because that's the default IP of the
+   PicoStation while in \"Upgrade Mode\".
+
+2- Power on the PicoStation while holding the reset button. Hold the reset
+   button until you see two red and orange leds blinking. Now the Picostation
+   M2 HP is in \"Upgrade Mode\".
+
+   Quick sanity check: see if the station is up in the network
+
+   $ ping 192.168.1.20
+
+3- Flashing/Upgrading OpenWRT:
+
+   3.1 - Flashing OpenWRT:
+
+   $ atftp -p -l openwrt-ar71xx-generic-ubnt-bullet-m-squashfs-factory.bin 192.168.1.20
+
+   After the transfer completes, it will take a few minutes for the flashing to
+   complete.  When it completes, the Router Station will reset and the LED pattern
+   will change.
+  
+   If you are just upgrading your system, you can use the sysupgrade version:
+   
+   3.2 - Upgrading OpenWRT 
+
+    - Copy the sysupgrade version to the /tmp folder of your device.
+    - From your device run the next command: 
+	sysupgrade openwrt-ar71xx-generic-ubnt-rs-squashfs-sysupgrade.bin 
+
+   After the transfer completes, it will take a few minutes for the flashing to
+   complete.  When it completes, the Router Station will reset and the LED pattern
+   will change.
+
+
+HOW TO TEST IT:
+##############
+
+Once the device is flashed, the station will come up with the default IP:
+192.168.1.1.
+
+Now, you just need to telnet into it:
+
+ $ telnet 192.168.1.1 (or the IP)
+
+NOTE: I encountered serveral problems at this point (i.e.: the default IP is
+the gateway's IP of my LAN). Due to this, I decided to access the station using
+the serial connection.
+
+If you don't have a cable to connect your dev machine with the PicoStation,
+take a look at the document \"how-to-create-rs232-serial-cable.txt\".
+
++ Configure minicom: 
+  -----------------
+
+ - Connect the serial cable to the station and to your dev machine.
+ - Configured minicom with the next parameters:
+
+  Check the USB device: /dev/ttyUSB0 (check dmesg)
+  Terminal Settings: 115200 baud, 8 bits, nor parity, 1 stop bit.
+    $ sudo minicom
+      ctrl+A+Z -> O -> 
+       - serial port setup : A -> /dev/ttyUSB0
+       - Bps/Par/Bits: E -> 115200 8N1
+       - SW & HW Flow Control -> NO
+       - Save it as: USB0
+
+    $ sudo minicom USB0 (should work)
+
+  Terminal Parameters Source: http://www.ubnt.com/wiki/RouterStation_Pro
+
++ Enable wifi:
+  -----------
+
+By default, Wi-Fi radios are DISABLED in OpenWRT. Also, the LAN and the
+wireless network interaces are bridged together. Play with the next config
+files to change that:
+
+  - /etc/config/wireless
+  - /etc/conifg/network
+
+Note: For more detailed info: http://wiki.openwrt.org/doc/uci/wireless
+
+Once you are done, restart the network.
+
+  $ /etc/init.d/network restart
+
+Now, your OpenWRT is ready to establish a mesh link:
+
+ $ ifconfig wlan0 down
+ $ iw wlan0 interface add mesh0 type mesh
+ $ iw mesh0 set channel <number>
+ $ ifconfig wlan0 <ip> up
+ $ iw mesh0 mesh join <mesh-id>
+ 
+ And ping!!!! Congratulations!!
+
+Next, the config files that worked for me:
+
+/etc/config/network:
+
+config 'interface' 'loopback'
+        option 'ifname' 'lo'
+        option 'proto' 'static'
+        option 'ipaddr' '127.0.0.1'
+        option 'netmask' '255.0.0.0'
+
+config 'interface' 'lan'
+        option 'ifname' 'eth0'
+        #option 'type' 'bridge'
+        option 'proto' 'static'
+        option 'ipaddr' '192.168.1.90'
+        option 'netmask' '255.255.255.0'
+
+/etc/config/wireless:
+
+config wifi-device  radio0
+        option type     mac80211
+        option channel  11
+        option macaddr  00:27:22:80:90:42
+        option hwmode   11ng
+        option htmode   HT20
+        list ht_capab   SHORT-GI-40
+        list ht_capab   TX-STBC
+        list ht_capab   RX-STBC1
+        list ht_capab   DSSS_CCK-40
+        # REMOVE THIS LINE TO ENABLE WIFI:
+        option disabled 0
+
+config wifi-iface
+        option device   radio0
+        option network  lan
+        option mode     sta
+        #option ssid     OpenWrt
+        option encryption none

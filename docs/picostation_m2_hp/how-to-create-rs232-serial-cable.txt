@@ -1,0 +1,50 @@
+HOW TO CREATE A RS232 SERIAL CABLE FOR PICOSTATION M2 HP:
+########################################################
+
+For this you will need:
+  
+   - Unassemble PicoStation M2 HP
+   - 3.3v TTL RS232 level converter
+
+PicoStation M2 HP diagram:
+-------------------------
+
+Ethernet
+connector                            Antena
+     -----------------------------
+     |                           |
+    [ ]                          |==============
+     |     RS-232 PINS           |
+     -------| | | |---------------
+            1 2 3 4
+
+    Pin 1: 3.3V
+    Pin 2: S-IN
+    Pin 3: S-OUT
+    Pin 4: GND
+
+- You need to connect the pins from the TTL RS232 level converter with the pins
+  of the PicoStation board.
+
+- Depending on the RS232 level converter you have, the order of the pinc may vary.
+
+- Have in mind that you have to cross-connect the IN & OUT pins of both
+  devices. This means PicoStation's S-IN has to be connected to TTL Level
+  Converteer's TX-OUT and viceversa.
+
+Result: rs232_serial_connection_picostation_m2_hp_cable.png
+
+Terminal Settings:
+------------------
+
+These are the parameters used with OpenWRT:
+
+Speed: 115200
+Data: 8
+Parity: None
+Stopbit: 1
+
+
+Sources:
+-------
+- http://www.ubnt.com/wiki/PicoStation2_RS232_Connection

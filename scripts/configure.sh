@@ -50,12 +50,11 @@ sudo cp config_files/qemu-ifup /etc/qemu-ifup
 
 # copy openwrt .config file
 cp config_files/dot.config openwrt/.config
-#cd openwrt && yes '' | make oldconfig && cd ..
+cd openwrt && yes '' | make oldconfig && cd ..
 sed -i -e "s@CONFIG_EXTERNAL_KERNEL_TREE.*@CONFIG_EXTERNAL_KERNEL_TREE=\"${PWD}/kernel\"@" openwrt/.config
 
 # copy kernel .config file
 cp config_files/kernel.dot.config kernel/.config
-cd openwrt && yes '' | make kernel_oldconfig && cd ..
 
 # This is for aesthetics only:  it only affects the directory name of intermediate build files.
 sed -i -e "s/LINUX_VERSION:=.*/LINUX_VERSION:=3.2.0/" openwrt/target/linux/x86/Makefile

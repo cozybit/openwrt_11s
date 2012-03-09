@@ -49,13 +49,20 @@ sudo cp config_files/qemu-ifup /etc/qemu-ifup
 
 
 # copy openwrt .config file
-cp config_files/dot.config openwrt/.config
-cd openwrt && yes '' | make oldconfig && cd ..
+#cp config_files/dot.config openwrt/.config
+#cd openwrt && yes '' | make oldconfig && cd ..
+echo CONFIG_TARGET_x86=y > openwrt/.config
+cd openwrt && make defconfig && cd ..
+
+# Point to our external kernel
 sed -i -e "s@CONFIG_EXTERNAL_KERNEL_TREE.*@CONFIG_EXTERNAL_KERNEL_TREE=\"${PWD}/kernel\"@" openwrt/.config
+# No kernel modules.  We'll handle the module installation outside openwrt in the build-modules.sh script
+sed -i -e "s@^CONFIG_PACKAGE_kmod.*@# & -- zapped by openwrt11s configure.sh@" openwrt/.config
 
 # copy kernel .config file
 cp config_files/kernel.dot.config kernel/.config
 
-# This is for aesthetics only:  it only affects the directory name of intermediate build files.
 sed -i -e "s/LINUX_VERSION:=.*/LINUX_VERSION:=3.2.0/" openwrt/target/linux/x86/Makefile
 
+# mac80211 dependency needs to be enabled in the monolithic kernel.
+echo "CONFIG_AVERAGE=y" >> openwrt/target/linux/generic/config-3.2

@@ -49,10 +49,8 @@ sudo cp config_files/qemu-ifup /etc/qemu-ifup
 
 
 # copy openwrt .config file
-#cp config_files/dot.config openwrt/.config
-#cd openwrt && yes '' | make oldconfig && cd ..
-echo CONFIG_TARGET_x86=y > openwrt/.config
-cd openwrt && make defconfig && cd ..
+cp config_files/dot.config openwrt/.config
+cd openwrt && yes '' | make oldconfig && cd ..
 
 # Point to our external kernel
 sed -i -e "s@CONFIG_EXTERNAL_KERNEL_TREE.*@CONFIG_EXTERNAL_KERNEL_TREE=\"${PWD}/kernel\"@" openwrt/.config

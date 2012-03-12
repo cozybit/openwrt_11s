@@ -1,9 +1,15 @@
 This folder contains the configuration files required to build OpenWRT.
-	1. .config
-		- Configures kernel for OpenWRT
+	1. dot.config
+		- Configures OpenWRT build options
 
-	2. qemu-ifup
+	2. kernel.dot.config
+		-Customized kernel for OpenWRT
+
+	3. network
+		-Customized network file for simulated radios
+
+	4. qemu-ifup
 		- Enables Qemu to run simulated interface
 
-	3. wireless
+	5. wireless
 		- Builds OpenWRT with two wi-fi radios in a mesh configuration

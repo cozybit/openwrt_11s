@@ -4,4 +4,5 @@ Build OpenWRT for Qemu on x86
 	2) ./openwrt_11s/scripts/fetch.sh
 	3) ./openwrt_11s/scripts/configure.sh
 	4) ./openwrt_11s/scripts/build.sh
+	5) ./openwrt_11s/scripts/build-modules.sh
 	5) ./openwrt_11s/scripts/launch.sh 

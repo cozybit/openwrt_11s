@@ -62,5 +62,11 @@ cp config_files/kernel.dot.config kernel/.config
 
 sed -i -e "s/LINUX_VERSION:=.*/LINUX_VERSION:=3.2.0/" openwrt/target/linux/x86/Makefile
 
+# openwrt will use the config template listed below to modify the .config that we provide
+# we could just wipe out that template or surgically introduce the fixups we need here.
+# Here we do the latter.  TODO: Try to just nuke config-3.2 and see what happens...
+
 # mac80211 dependency needs to be enabled in the monolithic kernel.
 echo "CONFIG_AVERAGE=y" >> openwrt/target/linux/generic/config-3.2
+# add the e1000 driver back to the kernel image as it is used by qemu to emulate ethernet
+echo "CONFIG_E1000=y" >> openwrt/target/linux/generic/config-3.2

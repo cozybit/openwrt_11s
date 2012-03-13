@@ -55,6 +55,8 @@ cd openwrt
 ./scripts/feeds install sshfs
 # our testsuite is in bash
 ./scripts/feeds install bash
+# we want the full-blown ping, not the puny busybox replacement
+./scripts/feeds install iputils-ping
 yes '' | make oldconfig
 cd ..
 

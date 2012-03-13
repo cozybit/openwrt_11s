@@ -1,4 +1,6 @@
-Build OpenWRT for Qemu on x86
+OpenWRT for Qemu on x86
+
+== Quick Start
 
 	1) git clone http://github.com/cozybit/openwrt_11s
 	2) ./openwrt_11s/scripts/fetch.sh
@@ -6,3 +8,79 @@ Build OpenWRT for Qemu on x86
 	4) ./openwrt_11s/scripts/build.sh
 	5) ./openwrt_11s/scripts/build-modules.sh
 	5) ./openwrt_11s/scripts/launch.sh 
+
+== What can you do with it?
+
+Run mesh in a box:
+
+root@OpenWrt:/# modprobe mac80211_hwsim
+root@OpenWrt:/# iw phy0 interface add mesh0 type mesh
+root@OpenWrt:/# iw phy1 interface add mesh1 type mesh
+root@OpenWrt:/# ifconfig mesh0 up
+root@OpenWrt:/# ifconfig mesh1 up
+root@OpenWrt:/# iw mesh0 mesh join moo
+root@OpenWrt:/# iw mesh1 mesh join moo
+root@OpenWrt:/# iw mesh0 station dump
+Station 02:00:00:00:01:00 (on mesh0)
+	inactive time:	10 ms
+	rx bytes:	627
+	rx packets:	20
+	tx bytes:	392
+	tx packets:	6
+	tx retries:	0
+	tx failed:	0
+	signal:  	-30 dBm
+	signal avg:	-30 dBm
+	tx bitrate:	1.0 MBit/s
+	rx bitrate:	1.0 MBit/s
+	mesh llid:	25245
+	mesh plid:	51619
+	mesh plink:	ESTAB
+
+== How to improve it?
+
+1. File issues
+2. Fix issues
+
+== How to fix issues?
+
+=== Add missing packages.  
+
+Try to find out if it's a base package (i.e. included in openwrt) or a package
+from feeds.  If it is a base package:
+
+# cd openwrt
+# make menuconfig
+(look for the package or search with '/')
+enable
+# cd ..
+# ./scripts/save-configs.sh
+# git commit -a -m 'Added package xyz'
+
+If it is not a base package you will have to first 
+
+cd openwrt
+./scritps/feed install foobar
+
+And only after that step it will appear in openwrt's menuconfig.
+If you add a package from feeds, edit ./scripts/configure.sh to install it.
+For instance:
+
+# we need this to mount our development host drive on guest
+./scripts/feeds install sshfs
+
+=== Change kernel configuration options
+
+To make a long story short, you will need to make two changes:
+
+1. the config_files/kernel.dot.config
+
+AND
+
+2. the ./scripts/configure.sh (see how we enable CONFIG_AVERAGE as an example)
+
+=== Add files to the rootfs of the target
+
+Save them to the config_files directory and move them over the the
+openwrt/files directory with ./scripts/configure.sh
+

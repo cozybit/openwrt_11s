@@ -50,7 +50,11 @@ sudo cp config_files/qemu-ifup /etc/qemu-ifup
 
 # copy openwrt .config file
 cp config_files/dot.config openwrt/.config
-cd openwrt && yes '' | make oldconfig && cd ..
+cd openwrt 
+# we need this to mount our development host drive on guest
+./scripts/feeds install sshfs
+yes '' | make oldconfig
+cd ..
 
 # Point to our external kernel
 sed -i -e "s@CONFIG_EXTERNAL_KERNEL_TREE.*@CONFIG_EXTERNAL_KERNEL_TREE=\"${PWD}/kernel\"@" openwrt/.config
@@ -70,3 +74,5 @@ sed -i -e "s/LINUX_VERSION:=.*/LINUX_VERSION:=3.2.0/" openwrt/target/linux/x86/M
 echo "CONFIG_AVERAGE=y" >> openwrt/target/linux/generic/config-3.2
 # add the e1000 driver back to the kernel image as it is used by qemu to emulate ethernet
 echo "CONFIG_E1000=y" >> openwrt/target/linux/generic/config-3.2
+# need fuse for sshfs
+echo "CONFIG_FUSE_FS=y" >> openwrt/target/linux/generic/config-3.2

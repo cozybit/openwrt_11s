@@ -53,6 +53,8 @@ cp config_files/dot.config openwrt/.config
 cd openwrt 
 # we need this to mount our development host drive on guest
 ./scripts/feeds install sshfs
+# our testsuite is in bash
+./scripts/feeds install bash
 yes '' | make oldconfig
 cd ..
 

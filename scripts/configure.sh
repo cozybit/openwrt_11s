@@ -60,16 +60,18 @@ cd openwrt
 yes '' | make oldconfig
 cd ..
 
-# Point to our external kernel
-sed -i -e "s@CONFIG_EXTERNAL_KERNEL_TREE.*@CONFIG_EXTERNAL_KERNEL_TREE=\"${PWD}/kernel\"@" openwrt/.config
-# No kernel modules.  We'll handle the module installation outside openwrt in the build-modules.sh script
-sed -i -e "s@^CONFIG_PACKAGE_kmod.*@# & -- zapped by openwrt11s configure.sh@" openwrt/.config
+### *FIXME* this section was not working, comment it out for now and use the openwrt kernel
+## Point to our external kernel
+#sed -i -e "s@CONFIG_EXTERNAL_KERNEL_TREE.*@CONFIG_EXTERNAL_KERNEL_TREE=\"${PWD}/kernel\"@" openwrt/.config
+## No kernel modules.  We'll handle the module installation outside openwrt in the build-modules.sh script
+#sed -i -e "s@^CONFIG_PACKAGE_kmod.*@# & -- zapped by openwrt11s configure.sh@" openwrt/.config
 
 ## KERNEL CONFIGURATION
 # copy kernel .config file
-cp config_files/kernel.dot.config kernel/.config
+#cp config_files/kernel.dot.config kernel/.config
+cp config_files/kernel.dot.config openwrt/target/linux/generic/config-3.2
 
-sed -i -e "s/LINUX_VERSION:=.*/LINUX_VERSION:=3.2.0/" openwrt/target/linux/x86/Makefile
+sed -i -e "s/LINUX_VERSION:=.*/LINUX_VERSION:=3.2.1/" openwrt/target/linux/x86/Makefile
 
 # openwrt will use the config template listed below to modify the .config that we provide
 # we could just wipe out that template or surgically introduce the fixups we need here.

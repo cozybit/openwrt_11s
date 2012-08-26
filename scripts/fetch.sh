@@ -9,4 +9,3 @@ cd openwrt
 git checkout ${OPENWRT_COMMIT}
 ./scripts/feeds update packages
 cd ..
-git clone git@github.com:cozybit/open80211s kernel

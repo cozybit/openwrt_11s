@@ -3,11 +3,11 @@ OpenWRT for Qemu on x86
 == Quick Start
 
 	1) git clone http://github.com/cozybit/openwrt_11s
-	2) ./openwrt_11s/scripts/fetch.sh
-	3) ./openwrt_11s/scripts/configure.sh
-	4) ./openwrt_11s/scripts/build.sh
-	5) ./openwrt_11s/scripts/build-modules.sh
-	5) ./openwrt_11s/scripts/launch.sh 
+	2) ./scripts/fetch.sh
+	3) ./scripts/configure.sh
+	4) ./scripts/build.sh
+	5) ./scripts/build-modules.sh
+	5) ./scripts/launch.sh 
 
 == What can you do with it?
 
